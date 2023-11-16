@@ -1,2 +1,2 @@
-# goreddit
-Go Web Development Pratice Project
+# Go Programming Language
+Practice software development with Go
