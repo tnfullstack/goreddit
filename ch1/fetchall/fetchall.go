@@ -20,6 +20,9 @@ func main() {
 		fmt.Println(<-ch) // receive from channel ch
 	}
 	fmt.Printf("%.2fs elapsed\n", time.Since(start).Seconds())
+
+	result := convert(5, 5.5)
+	fmt.Println(result)
 }
 
 func fetch(url string, ch chan<- string) {
@@ -41,4 +44,8 @@ func fetch(url string, ch chan<- string) {
 	}
 	secs := time.Since(start).Seconds()
 	ch <- fmt.Sprintf("%.2fs %7d %s", secs, nbytes, url)
+}
+
+func convert(i int, f float64) int {
+	return i + int(f)
 }
