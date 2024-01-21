@@ -12,7 +12,7 @@ func main() {
 	result := convert(5, 5.5)
 	fmt.Println(result)
 
-	str := "ABCDEFG"
+	str := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 	strSclice := strings.Split(str, "")
 	fmt.Println(strSclice)
@@ -21,7 +21,13 @@ func main() {
 		fmt.Println(i, l, string(l))
 	}
 
+	for i, l := range str {
+		fmt.Printf("%d %q\n", i, l)
+		add(l)
+	}
+
 	toStdout(str)
+
 }
 
 func convert(i int, f float64) float64 {
@@ -33,4 +39,9 @@ func toStdout(s string) {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func add(b rune) {
+	rune := b + 1
+	fmt.Printf("%v + %d = %v, convert to string %s\n", b, 1, rune, string(rune))
 }
