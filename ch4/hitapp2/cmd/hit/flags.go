@@ -1,11 +1,7 @@
 package main
 
 import (
-	"fmt"
-	"net/url"
-	"os"
-	"strconv"
-	"strings"
+	"flag"
 )
 
 type flags struct {
@@ -13,16 +9,8 @@ type flags struct {
 	n, c int
 }
 
-// parseFunc is a command-line flag parser function.
-type parseFunc func(string) error
-
+/*
 func (f *flags) parse() (err error) {
-	// a map of flag names and parsers.
-	parsers := map[string]parseFunc{
-		"url": f.urlVar(&f.url), // parses a url flag and updates f.url
-		"n":   f.intVar(&f.n),   // parses an int flag and updates f.n
-		"c":   f.intVar(&f.c),   // parses an int flag and updates f.c
-	}
 	for _, arg := range os.Args[1:] {
 		n, v, ok := strings.Cut(arg, "=")
 		if !ok {
@@ -39,18 +27,23 @@ func (f *flags) parse() (err error) {
 	}
 	return err
 }
+*/
 
-func (f *flags) urlVar(p *string) parseFunc {
-	return func(s string) error {
-		_, err := url.Parse(s)
-		*p = s
-		return err
-	}
-}
+func (f *flags) parse() error {
+	// define flag variables
+	flag.StringVar(&f.url, "url", "", "HTTP server `URL` (required)")
+	flag.IntVar(&f.n, "n", f.n, "Number of request")
+	flag.IntVar(&f.c, "c", f.c, "Concurrency level")
+	flag.Parse()
 
-func (f *flags) intVar(p *int) parseFunc {
-	return func(s string) (err error) {
-		*p, err = strconv.Atoi(s)
-		return err
-	}
+	// var (
+	// 	u = flag.String("url", "", "HTTP server `URL` (required)")
+	// 	n = flag.Int("n", f.n, "Number of requests")
+	// 	c = flag.Int("c", f.c, "Concurrency level")
+	// )
+	// flag.Parse()
+	// f.url = *u
+	// f.n = *n
+	// f.c = *c
+	return nil
 }

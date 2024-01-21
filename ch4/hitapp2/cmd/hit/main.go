@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"log"
+	"os"
 	"runtime"
 )
 
@@ -29,9 +29,9 @@ func banner() string {
 	return bannerText[1:]
 }
 
-func usage() string {
-	return usageText[1:]
-}
+// func usage() string {
+// 	return usageText[1:]
+// }
 
 func main() {
 	f := &flags{
@@ -39,8 +39,8 @@ func main() {
 		c: runtime.NumCPU(),
 	}
 	if err := f.parse(); err != nil {
-		fmt.Println(usage())
-		log.Fatal(err)
+		// fmt.Println(usage())
+		os.Exit(1)
 	}
 
 	fmt.Println(banner())
