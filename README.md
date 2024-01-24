@@ -7,12 +7,12 @@ Practice software development with Go
 - Design Pattern in Go - Dmitri Nesteruk
 - Data Structures, Algorithms and Design Pattern with Go - Packt Publishing
   
-## Tools  
-Book: 
+## Book 
 - The Go Programming Language - Alan A.A Donovan & Brian W. Kernighan  
 - Go by Example - Version 6 - Inanc Gumus
 - Go Cookbook - First Edition - Sau Sheong Chang 
 
+## Tools  
 Text Editor:  
 - VS Code, VIM
 - Go version: go1.18 darwin/arm64 
