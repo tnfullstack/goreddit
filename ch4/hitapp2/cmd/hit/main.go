@@ -29,9 +29,9 @@ func banner() string {
 	return bannerText[1:]
 }
 
-// func usage() string {
-// 	return usageText[1:]
-// }
+func usage() string {
+	return usageText[1:]
+}
 
 func main() {
 	f := &flags{

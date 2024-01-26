@@ -6,12 +6,37 @@ import (
 	"fmt"
 	"net/url"
 	"os"
+	"strconv"
 	"strings"
 )
 
 type flags struct {
 	url  string
 	n, c int
+}
+
+// number is a natural number.
+type number int
+
+// toNumber is a convenience function for converting p to *number.
+func toNumber(p *int) *number {
+	return (*number)(p)
+}
+
+func (n *number) Set(s string) error {
+	v, err := strconv.ParseInt(s, 0, strconv.IntSize)
+	switch {
+	case err != nil:
+		err = errors.New("parse error")
+	case v <= 0:
+		err = errors.New("should be positive")
+	}
+	*n = number(v)
+	return err
+}
+
+func (n *number) String() string {
+	return strconv.Itoa(int(*n))
 }
 
 /*
@@ -37,10 +62,9 @@ func (f *flags) parse() (err error) {
 func (f *flags) parse() error {
 	// define flag variables
 	flag.StringVar(&f.url, "url", "", "HTTP server `URL` (required)")
-	flag.IntVar(&f.n, "n", f.n, "Number of request")
-	flag.IntVar(&f.c, "c", f.c, "Concurrency level")
+	flag.Var(toNumber(&f.n), "n", "Number of request to make")
+	flag.Var(toNumber(&f.c), "c", "Concurrency level")
 	flag.Parse()
-
 	if err := f.validate(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		flag.Usage()
@@ -74,6 +98,7 @@ func validateURL(s string) error {
 	if strings.TrimSpace(s) == "" {
 		return errors.New("required")
 	}
+
 	u, err := url.Parse(s)
 	switch {
 	case strings.TrimSpace(s) == "":
