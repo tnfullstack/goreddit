@@ -3,7 +3,7 @@ package url
 import (
 	"errors"
 
-	"github.com/tvn0/gopl/url/util"
+	"github.com/tvn9/gopl/url/util"
 )
 
 const correctScheme = "https"
