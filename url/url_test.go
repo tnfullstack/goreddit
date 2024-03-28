@@ -10,9 +10,14 @@ func TestParseScheme(t *testing.T) {
 	const rawUrl = "https://foo.com"
 
 	err := u.ParseScheme(rawUrl)
-	want := "https"
+	if err != nil {
+		t.Logf("fails to parse scheme, err %q\n", err)
+	}
+
+	want := correctScheme
 	got := u.Scheme
-	if got != want {
-		t.Fatalf("Parse(%q).Scheme = %q; want %q, Error: %q\n", rawUrl, got, want, err)
+
+	if want != got {
+		t.Fatalf("ParseScheme(%q).Scheme = %q; want %q\n", rawUrl, got, want)
 	}
 }

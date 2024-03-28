@@ -2,8 +2,7 @@ package url
 
 import (
 	"errors"
-
-	"github.com/tvn9/gopl/url/util"
+	"strings"
 )
 
 const correctScheme = "https"
@@ -25,7 +24,7 @@ func (u *URL) ParseScheme(url string) error {
 	u.RawUrl = url
 
 	// get index position of "://"
-	i := util.GetStrIndex(url, "://")
+	i := strings.Index(url, "://")
 	if i < 0 {
 		return errors.New("missing scheme")
 	}
@@ -37,6 +36,7 @@ func (u *URL) ParseScheme(url string) error {
 		u.Scheme = tempScheme
 		return nil
 	} else {
+		u.Scheme = tempScheme
 		return errors.New("invalid url scheme")
 	}
 }
