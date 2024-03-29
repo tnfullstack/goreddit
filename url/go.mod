@@ -1,3 +1,3 @@
-module github.com/tvn9/gopl/url
+module url
 
 go 1.22.1

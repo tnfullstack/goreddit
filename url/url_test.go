@@ -1,23 +1,28 @@
 package url
 
-import "testing"
+import (
+	"testing"
+)
 
 // Writing a failing test (url_test.go)
-func TestParseScheme(t *testing.T) {
-	u := &URL{}
-
+func TestParse(t *testing.T) {
 	// Test url
-	const rawUrl = "https://foo.com"
+	const rawurl = "https://foo.com"
 
-	err := u.ParseScheme(rawUrl)
+	u, err := Parse(rawurl)
 	if err != nil {
-		t.Logf("fails to parse scheme, err %q\n", err)
+		t.Logf("Parse(%q) err = %q, want nil", rawurl, err)
+		t.Fail()
 	}
 
-	want := correctScheme
+	// Expected result
+	https := "https"
+	// http := "http"
+	// Result received
 	got := u.Scheme
 
-	if want != got {
-		t.Fatalf("ParseScheme(%q).Scheme = %q; want %q\n", rawUrl, got, want)
+	if got != https {
+		t.Logf("ParseScheme(%q).Scheme = %q; want %q\n", rawurl, got, https)
+		t.Fail()
 	}
 }
