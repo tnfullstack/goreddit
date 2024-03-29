@@ -1,6 +1,7 @@
 ## Go Test Methods 
 
-The list below only show the methods learned and used in so far this this training project.
+The list of some Go Test methods used in this training project. 
+The complete list of Go Test methods is available from [go.dev/testing](https://pkg.go.dev/testing#pkg-index)
 
 | Method                             | Purpose                                                             |
 | ---------------------------------- | ------------------------------------------------------------------- |

@@ -15,3 +15,6 @@ Practice software development with Go
 Text Editor:  
 - VS Code, VIM
 - Go version: go1.18 darwin/arm64 
+
+## Project Nodes 
+There is a list of [usefull notes](./ProjectNotes.md) documented during the training project. 
