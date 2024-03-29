@@ -17,7 +17,7 @@ func Parse(url string) (*URL, error) {
 	// get index position of "://"
 	i := strings.Index(url, "://")
 	if i < 0 {
-		return &URL{}, errors.New("missing scheme")
+		return nil, errors.New("missing scheme")
 	}
 
 	// parse scheme
