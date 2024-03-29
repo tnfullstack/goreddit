@@ -4,6 +4,7 @@ use (
 	./backup/urlv1
 	./backup/urlv2
 	./backup/urlv3
+	./backup/urlv4
 	./parseurl
 	./url
 )

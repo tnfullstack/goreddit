@@ -12,18 +12,6 @@ type URL struct {
 	RawUrl string
 }
 
-func (u *URL) GetHost() string {
-	return u.Host
-}
-
-func (u *URL) GetPort() string {
-	port := ""
-	if i := strings.Index(u.Host, ":"); i >= 0 {
-		port = u.Host[i+1:]
-	}
-	return port
-}
-
 // ParseScheme parses rawurl into a URL structure.
 func Parse(url string) (*URL, error) {
 	// get index position of "://"

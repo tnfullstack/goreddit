@@ -1,59 +1,13 @@
 package url
 
-// This pratice part covers
-// Reduce repetitive tests using table-driven testing
-// Run tests in isolation using subtests
-// Learn the tricks of writing maintainable tests
-// Learn to shuffle the execution order of tests
-// Parse port numbers from a host”
+// Adding test cases to test Parse host and path from rawurl
 
 import (
 	"fmt"
 	"testing"
 )
 
-// TestIPNoPort
-func TestIPNoPort(t *testing.T) {
-	const in = "127.0.0.1:"
-	testPort(t, in, "")
-
-}
-
-// TestIPPort
-func TestIPPort(t *testing.T) {
-	const in = "127.0.0.1:90"
-	testPort(t, in, "90")
-}
-
-// TestURLNoPort
-func TestURLNoPort(t *testing.T) {
-	const in = "foo.com"
-	testPort(t, in, "")
-}
-
-// TestURLEmtyPort
-func TestURLEmtyPort(t *testing.T) {
-	const in = "foo.com:"
-	testPort(t, in, "")
-}
-
-// TestURLPort
-func TestURLNumber(t *testing.T) {
-	const in = "foo.com:80"
-	testPort(t, in, "80")
-}
-
-// testPort is a helper function
-func testPort(t *testing.T, in, wantPort string) {
-	u := &URL{Host: in}
-	if got := u.GetPort(); got != wantPort {
-		t.Errorf("for host %q; got %q; want %q", in, got, wantPort)
-	} else {
-		fmt.Printf("Host: %q, Want Port: %q; Got Port %q\n", u.GetHost(), wantPort, u.GetPort())
-	}
-}
-
-// TestParse
+// Writing a failing test (url_test.go)
 func TestParse(t *testing.T) {
 	// Test url
 	const rawurl = "https://foo.com/thanh"
