@@ -14,7 +14,7 @@ import (
 
 // TestIPNoPort
 func TestIPNoPort(t *testing.T) {
-	const in = "127.0.0.1:"
+	const in = "127.0.0.1"
 	testPort(t, in, "")
 
 }
@@ -45,6 +45,7 @@ func TestURLNumber(t *testing.T) {
 
 // testPort is a helper function
 func testPort(t *testing.T, in, wantPort string) {
+	t.Helper()
 	u := &URL{Host: in}
 	if got := u.GetPort(); got != wantPort {
 		t.Errorf("for host %q; got %q; want %q", in, got, wantPort)

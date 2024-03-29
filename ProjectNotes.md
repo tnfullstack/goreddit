@@ -13,4 +13,6 @@ The complete list of Go Test methods is available from [go.dev/testing](https://
 | t.Errorf(format string, args ...any) | It is equivalent to calling Logf and Failf methods                  |
 | t.Fatal(args ...any)                 | It is equivalent to calling Log and FailNow methods                 |
 | t.Fatalf(format string, args ...any) | It is equivalent to calling Logf and FailNow methods                |
+| t.Helper()                           | It tells the testing package that this is a test helper             |
+
 
