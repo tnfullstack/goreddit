@@ -23,12 +23,6 @@ func Parse(url string) (*URL, error) {
 	// parse scheme, and host
 	scheme, rest := url[:i], url[i+3:]
 
-	// parse path
-	host, path := rest, ""
-	if i := strings.Index(rest, "/"); i >= 0 {
-		host, path = rest[:i], rest[i+1:]
-	}
-
 	// Store the correct scheme to URL struct
-	return &URL{Scheme: scheme, Host: host, Path: path}, nil
+	return &URL{Scheme: scheme, Host: rest}, nil
 }

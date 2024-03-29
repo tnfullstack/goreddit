@@ -2,6 +2,8 @@ go 1.22.1
 
 use (
 	./backup/urlv1
+	./backup/urlv2
+	./backup/urlv3
 	./parseurl
 	./url
 )
