@@ -20,4 +20,4 @@ Text Editor:
 Student and Programmer - Thanh Nguyen
 
 ## Project Nodes 
-There is a list of [useful notes](./ProjectNotes.md) documented during the training project. 
+This is a list of [useful notes](./ProjectNotes.md) documented during the training project. 

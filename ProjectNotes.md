@@ -15,4 +15,16 @@ The complete list of Go Test methods is available from [go.dev/testing](https://
 | t.Fatalf(format string, args ...any) | It is equivalent to calling Logf and FailNow methods                |
 | t.Helper()                           | It tells the testing package that this is a test helper             |
 
+### Running Subtest
+Useful commands for running tests  
 
+| Command                                  | Purpose                                                          |
+| ---------------------------------------- | ---------------------------------------------------------------- |
+| go test -v -run=TestParse                | Run a any subtest start with TestParse                           |
+| go test -v -run=TestParse$               | Run only specific subtest                                        |
+| go test -run=TestURLPort/^host_with_port | Run subtest begin with ^host_with_port                           |
+| go test -run=TestURLPort/with_port       | Run any subtest name contain with_port                           |
+| go test -v -run=URL/with_port            | Run any top level contains URL, ans subtest start with with_port |
+
+
+ 
