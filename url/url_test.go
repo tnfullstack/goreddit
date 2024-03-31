@@ -16,7 +16,7 @@ import (
 // Testing the string method
 func TestURLString(t *testing.T) {
 	u := &URL{
-		Scheme: "http",
+		Scheme: "https",
 		Host:   "foo.com",
 		Path:   "go",
 	}
@@ -28,7 +28,6 @@ func TestURLString(t *testing.T) {
 }
 
 // Share test TestURLPort test cases to test TestURLHostname
-
 var hostTests = map[string]struct {
 	in       string
 	hostname string
