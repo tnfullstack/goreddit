@@ -1,31 +1,16 @@
 package url
 
-// Tidying Up
-
-// Writing tesable example
-// Producing executable documentation
-// Measuring test coverage and benchmarking
-// Refacturing the URL parser
-// Differences between external and internal tests
+// This pratice part covers
+// Reduce repetitive tests using table-driven testing
+// Run tests in isolation using subtests
+// Learn the tricks of writing maintainable tests
+// Learn to shuffle the execution order of tests
+// Parse port numbers from a host”
 
 import (
 	"fmt"
 	"testing"
 )
-
-// Testing the string method
-func TestURLString(t *testing.T) {
-	u := &URL{
-		Scheme: "http",
-		Host:   "foo.com",
-		Path:   "go",
-	}
-
-	got, want := u.String(), "https://foo.com/go"
-	if got != want {
-		t.Errorf("%#v.String()\ngot %q\nwant %q", u, got, want)
-	}
-}
 
 // Share test TestURLPort test cases to test TestURLHostname
 

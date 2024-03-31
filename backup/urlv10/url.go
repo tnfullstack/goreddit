@@ -2,7 +2,6 @@ package url
 
 import (
 	"errors"
-	"fmt"
 	"strings"
 )
 
@@ -10,12 +9,7 @@ type URL struct {
 	Scheme string
 	Host   string
 	Path   string
-	// RawUrl string
-}
-
-// String method
-func (u *URL) String() string {
-	return fmt.Sprintf("%s://%s/%s", u.Scheme, u.Host, u.Path)
+	RawUrl string
 }
 
 func (u *URL) GetHost() string {
