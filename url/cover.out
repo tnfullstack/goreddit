@@ -1,0 +1,13 @@
+mode: set
+github.com/tvn9/gopl/url/url.go:17.31,19.2 1 1
+github.com/tvn9/gopl/url/url.go:21.32,23.11 2 1
+github.com/tvn9/gopl/url/url.go:23.11,25.3 1 1
+github.com/tvn9/gopl/url/url.go:26.2,26.19 1 1
+github.com/tvn9/gopl/url/url.go:29.32,31.11 2 1
+github.com/tvn9/gopl/url/url.go:31.11,33.3 1 1
+github.com/tvn9/gopl/url/url.go:34.2,34.21 1 1
+github.com/tvn9/gopl/url/url.go:38.38,41.11 2 0
+github.com/tvn9/gopl/url/url.go:41.11,43.3 1 0
+github.com/tvn9/gopl/url/url.go:46.2,50.43 3 0
+github.com/tvn9/gopl/url/url.go:50.43,52.3 1 0
+github.com/tvn9/gopl/url/url.go:55.2,55.58 1 0

@@ -26,5 +26,11 @@ Useful commands for running tests
 | go test -run=TestURLPort/with_port       | Run any subtest name contain with_port                           |
 | go test -v -run=URL/with_port            | Run any top level contains URL, ans subtest start with with_port |
 
+### Measuring Test Coverage
+
+| Command                         | Purpose                                       |
+| ------------------------------- | --------------------------------------------- |
+| go test -coverprofile cover.out | Run test and get test coverage output         |
+| go tool cover -html=cover.out   | Show test coverage output from cover.out file |
 
  
