@@ -13,14 +13,7 @@ type URL struct {
 }
 
 func (u *URL) GetHost() string {
-	host := ""
-	if strings.Contains(u.Host, ":") {
-		i := strings.Index(u.Host, ":")
-		host = u.Host[:i]
-	} else {
-		host = u.Host
-	}
-	return host
+	return u.Host
 }
 
 func (u *URL) GetPort() string {
