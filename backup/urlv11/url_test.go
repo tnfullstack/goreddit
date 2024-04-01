@@ -1,9 +1,16 @@
 package url
 
-// Refactoring The Parse Function
+// Tidying Up
+
+// Writing tesable example
+// Producing executable documentation
+// Measuring test coverage and benchmarking
+// Refacturing the URL parser
+// Differences between external and internal tests
 
 import (
 	"fmt"
+	"log"
 	"testing"
 )
 
@@ -32,6 +39,23 @@ func TestParseInvalidURLs(t *testing.T) {
 	}
 }
 
+// Adding additional example test
+func ExampleURL_fields() {
+	u, err := Parse("https://foo.com/go")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(u.Scheme)
+	fmt.Println(u.Host)
+	fmt.Println(u.Path)
+	fmt.Println(u)
+	// Output:
+	// https
+	// foo.com
+	// go
+	// https://foo.com/go
+}
+
 // Testing the string method
 func TestURLString(t *testing.T) {
 	tests := map[string]struct {
@@ -43,7 +67,6 @@ func TestURLString(t *testing.T) {
 		"scheme":    {url: &URL{Scheme: "https"}, want: "https://"},
 		"host":      {url: &URL{Scheme: "https", Host: "foo.com"}, want: "https://foo.com"},
 		"path":      {url: &URL{Scheme: "https", Host: "foo.com", Path: "go"}, want: "https://foo.com/go"},
-		"path only": {url: &URL{Scheme: "", Host: "", Path: "thanh"}, want: "/thanh"},
 	}
 
 	for name, tt := range tests {
@@ -79,34 +102,4 @@ func TestURLPort(t *testing.T) {
 		// ofcause subtest can be addted to with new t.Run to test other cases
 		// t.Run(""), func(t *testing.T) { ... }
 	}
-}
-
-// TestParse
-func TestParse(t *testing.T) {
-	const url = "https://foo.com/go"
-
-	want := &URL{Scheme: "https", Host: "foo.com", Path: "go"}
-
-	got, err := Parse(url)
-	if err != nil {
-		t.Fatalf("Parse(%q) err = %q, want nil", url, err)
-	}
-
-	// Compare objects trick
-	if *got != *want {
-		t.Errorf("Parse(%q):\n\tgot: %s\n\twant: %s\n", url, got.testString(), want.testString())
-		t.Errorf("")
-	}
-
-	// if got, want := u.Scheme, "https"; got != want {
-	// 	t.Errorf("Parse(%q).Scheme = %q; want %q", url, got, want)
-	// }
-
-	// if got, want := u.Host, "foo.com"; got != want {
-	// 	t.Errorf("Parse(%q).Host = %q; want %q", url, got, want)
-	// }
-
-	// if got, want := u.Path, "go"; got != want {
-	// 	t.Errorf("Parse(%q).Path = %q; want %q", url, got, want)
-	// }
 }

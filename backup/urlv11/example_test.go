@@ -26,7 +26,7 @@ func ExampleURL_fields() {
 	fmt.Println(u.Path)
 	fmt.Println(u)
 	// Output:
-	// https://
+	// https
 	// foo.com
 	// go
 	// https://foo.com/go

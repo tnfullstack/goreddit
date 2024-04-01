@@ -1,7 +1,10 @@
 package url
 
+// Refactoring the Parse Function
+
 import (
 	"errors"
+	"fmt"
 	"strings"
 )
 
@@ -30,42 +33,65 @@ func (u *URL) String() string {
 		s += p
 	}
 	return s
-	// return fmt.Sprintf("%s://%s/%s", u.Scheme, u.Host, u.Path)
 }
 
+// testString
+func (u *URL) testString() string {
+	return fmt.Sprintf("scheme=%q, host=%q, path=%q", u.Scheme, u.Host, u.Path)
+}
+
+// GetHost returns u.Host, stripping port number if present.
 func (u *URL) GetHost() string {
-	i := strings.Index(u.Host, ":")
-	if i < 0 {
-		return u.Host
+	host, _, ok := split(u.Host, ":", 0)
+	if !ok {
+		host = u.Host
 	}
-	return u.Host[:i]
+	return host
 }
 
+// Port returns the port part of u.Host, without the leading colon.
+// If u.Host doesn't contain a port, Port returns an empty string.
 func (u *URL) GetPort() string {
-	i := strings.Index(u.Host, ":")
-	if i < 0 {
-		return ""
-	}
-	return u.Host[i+1:]
+	_, port, _ := split(u.Host, ":", 0)
+	return port
 }
 
+// Refactoring the Parse function
 // ParseScheme parses rawurl into a URL structure.
 func Parse(url string) (*URL, error) {
-	// get index position of "://"
-	i := strings.Index(url, "://")
-	if i < 1 {
+	// parse scheme
+	scheme, rest, ok := parseScheme(url)
+	if !ok {
 		return nil, errors.New("missing scheme")
 	}
-
-	// parse scheme, and host
-	scheme, rest := url[:i], url[i+3:]
-
-	// parse path
-	host, path := rest, ""
-	if i := strings.Index(rest, "/"); i >= 0 {
-		host, path = rest[:i], rest[i+1:]
-	}
+	// parse hose
+	host, path := parseHostPath(rest)
 
 	// Store the correct scheme to URL struct
 	return &URL{Scheme: scheme, Host: host, Path: path}, nil
+}
+
+// parseHost
+func parseHostPath(str string) (host, path string) {
+	host, path, ok := split(str, "/", 0)
+	if !ok {
+		host = str
+	}
+	return host, path
+}
+
+// parseScheme
+func parseScheme(url string) (scheme, rest string, ok bool) {
+	// get index position of "://"
+	return split(url, "://", 1)
+}
+
+// Split s by sep.
+// split returns empty string if it couldn't find sep in s at index n.
+func split(s, sep string, n int) (a, b string, ok bool) {
+	i := strings.Index(s, sep)
+	if i < n {
+		return "", "", false
+	}
+	return s[:i], s[i+len(sep):], true
 }
