@@ -12,6 +12,7 @@ use (
 	./backup/urlv7
 	./backup/urlv8
 	./backup/urlv9
+	./hit
 	./parseurl
 	./url
 )
