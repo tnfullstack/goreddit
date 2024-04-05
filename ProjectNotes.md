@@ -1,4 +1,4 @@
-## Go Test Methods 
+## Go Tools/Test Commands and Test Methods 
 
 This is a list of some Go Test methods used in this training project so far. 
 The complete list of Go Test methods is available from [go.dev/testing](https://pkg.go.dev/testing#pkg-index)
@@ -66,4 +66,35 @@ compile:
 			GOOS=darwin GOARCH=arm64 go build -o ./bin/hit_darwin_arm64 ./cmd/hit
 			# compile it for Windows
 			GOOS=windows GOARCH=amd64 go build -o ./bin/hit_win_amd64.exe ./cmd/hit
+```
+
+## Useful Coding Patterns
+
+Parsing command line flags functions   
+
+```go
+// parseFunc is of type func(string) error 
+// firstclass function signature pattern 
+type type parseFunc func(string) error 
+
+// intVar takes in a pointer to an int and returns a function that take 
+// a string and convert to type in then assign result to the point to 
+// the variable from intVar function signature
+func (f *flags) intVar(p *int) parseFunc {
+	return func(s string) (err error) {
+		*p, err = strconv.Atoi(s)
+		return err
+	}
+}
+
+// urlVar returns the function that call url.Parse then assign the result
+// to the variable p (pointer to a string) 
+func (f *flags) urlVar(p *string) parseFunc {
+	return func(s string) error {
+		_, err := url.Parse(s)
+		*p = s
+		return err
+	}
+}
+
 ```
