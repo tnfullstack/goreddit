@@ -75,7 +75,7 @@ Parsing command line flags functions
 ```go
 // parseFunc is of type func(string) error 
 // firstclass function signature pattern 
-type type parseFunc func(string) error 
+type parseFunc func(string) error 
 
 // intVar takes in a pointer to an int and returns a function that take 
 // a string and convert to type in then assign result to the point to 
@@ -97,4 +97,32 @@ func (f *flags) urlVar(p *string) parseFunc {
 	}
 }
 
+```
+
+Parsing command-line flags manually   
+```go
+func (f *flags) parseFlags() (err error) {
+	// a map of flag names and parsers function
+	parsers := map[string]parseFunc{
+		"url": f.urlVar(&f.url),
+		"n":   f.intVar(&f.n),
+		"c":   f.intVar(&f.c),
+	}
+
+	for _, arg := range os.Args[1:] {
+		n, v, ok := strings.Cut(arg, "=")
+		if !ok {
+			continue // can't find the flag
+		}
+		pFunc, ok := parsers[strings.TrimPrefix(n, "-")]
+		if !ok {
+			continue // can't find a parse
+		}
+		if err = pFunc(v); err != nil {
+			err = fmt.Errorf("invalid value %q for flag %s: %w", v, n, err)
+			break // parsing error
+		}
+	}
+	return err
+}
 ```

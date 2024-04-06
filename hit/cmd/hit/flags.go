@@ -2,21 +2,17 @@ package main
 
 import (
 	"fmt"
-	"net/url"
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/tvn9/gopl/url"
 )
 
 // flags struct holds the flag fields
 type flags struct {
 	url  string
 	n, c int
-}
-
-// parse
-func (f *flags) parse() error {
-	return nil
 }
 
 // parseFunc is a command-line flag parser function.
@@ -35,11 +31,11 @@ func (f *flags) parseFlags() (err error) {
 		if !ok {
 			continue // can't find the flag
 		}
-		parse, ok := parsers[strings.TrimPrefix(n, "-")]
+		pFunc, ok := parsers[strings.TrimPrefix(n, "-")]
 		if !ok {
 			continue // can't find a parse
 		}
-		if err = parse(v); err != nil {
+		if err = pFunc(v); err != nil {
 			err = fmt.Errorf("invalid value %q for flag %s: %w", v, n, err)
 			break // parsing error
 		}

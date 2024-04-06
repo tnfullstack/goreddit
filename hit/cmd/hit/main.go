@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"runtime"
 )
 
 const (
@@ -27,8 +28,13 @@ func banner() string { return bannerText[1:] }
 func usage() string  { return usageText[1:] }
 
 func main() {
-	var f flags
-	if err := f.parse(); err != nil {
+	// setting a flags object with default values for n and c
+	f := &flags{
+		n: 100,
+		c: runtime.NumCPU(),
+	}
+
+	if err := f.parseFlags(); err != nil {
 		fmt.Println(usage())
 		log.Fatal(err)
 	}
