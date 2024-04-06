@@ -1,16 +1,7 @@
-// Extending the flag package
-
 package main
 
 import (
-	"errors"
 	"flag"
-	"fmt"
-	"os"
-	"runtime"
-	"strings"
-
-	"github.com/tvn9/gopl/url"
 )
 
 // flags struct holds the flag fields
@@ -19,56 +10,6 @@ type flags struct {
 	n, c int
 }
 
-// Using the flag variables
-func (f *flags) parseFlags() error {
-	// You no longer need to declare variables
-	flag.StringVar(&f.url, "url", "", "HTTP server `URL` (required)")
-	flag.IntVar(&f.n, "n", f.n, "Number of requests")
-	flag.IntVar(&f.c, "c", f.c, "Concurrency level")
-	flag.Parse()
-
-	if err := f.validate(); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		flag.Usage()
-		return err
-	}
-	return nil
-}
-
-// validate post-conditions after parsing the flags
-func (f *flags) validate() error {
-	if f.c > f.n {
-		return fmt.Errorf("-c=%d: should be less than or equal to -n=%d", f.c, f.n)
-	}
-
-	if f.c > runtime.NumCPU() {
-		f.c = runtime.NumCPU()
-		return fmt.Errorf("max available CPU is %d, option c range is 1 to 10", f.c)
-	}
-
-	if err := validateURL(f.url); err != nil {
-		return fmt.Errorf("invalid value %q for flag -url: %w", f.url, err)
-	}
-	return nil
-}
-
-// validateURLFlag
-func validateURL(s string) error {
-	u, err := url.Parse(s)
-	switch {
-	case strings.TrimSpace(s) == "":
-		err = errors.New("required")
-	case err != nil:
-		err = errors.New("parse error")
-	case u.Scheme != "https" && u.Scheme != "http":
-		err = errors.New("only supported scheme is http or https")
-	case u.Host == "":
-		err = errors.New("missing host")
-	}
-	return err
-}
-
-/*
 // Using the standard library's parse package.
 func (f *flags) parseFlags() error {
 	var (
@@ -82,7 +23,6 @@ func (f *flags) parseFlags() error {
 	f.c = *c
 	return nil
 }
-*/
 
 /*
 // parseFunc is a command-line flag parser function.
@@ -96,6 +36,7 @@ func (f *flags) parseFlags() (err error) {
 		"n":   f.intVar(&f.n),
 		"c":   f.intVar(&f.c),
 	}
+
 	for _, arg := range os.Args[1:] {
 		n, v, ok := strings.Cut(arg, "=")
 		if !ok {

@@ -70,7 +70,7 @@ compile:
 
 ## Useful Coding Patterns
 
-Parsing command line flags functions   
+Parsing command line flags function providers 
 
 ```go
 // parseFunc is of type func(string) error 

@@ -1,16 +1,12 @@
-// Extending the flag package
-
 package main
 
 import (
 	"errors"
 	"flag"
 	"fmt"
+	"net/url"
 	"os"
-	"runtime"
 	"strings"
-
-	"github.com/tvn9/gopl/url"
 )
 
 // flags struct holds the flag fields
@@ -41,11 +37,6 @@ func (f *flags) validate() error {
 		return fmt.Errorf("-c=%d: should be less than or equal to -n=%d", f.c, f.n)
 	}
 
-	if f.c > runtime.NumCPU() {
-		f.c = runtime.NumCPU()
-		return fmt.Errorf("max available CPU is %d, option c range is 1 to 10", f.c)
-	}
-
 	if err := validateURL(f.url); err != nil {
 		return fmt.Errorf("invalid value %q for flag -url: %w", f.url, err)
 	}
@@ -60,8 +51,8 @@ func validateURL(s string) error {
 		err = errors.New("required")
 	case err != nil:
 		err = errors.New("parse error")
-	case u.Scheme != "https" && u.Scheme != "http":
-		err = errors.New("only supported scheme is http or https")
+	case u.Scheme != "https":
+		err = errors.New("only supported scheme is http")
 	case u.Host == "":
 		err = errors.New("missing host")
 	}
