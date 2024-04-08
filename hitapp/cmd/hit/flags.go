@@ -8,10 +8,16 @@ import (
 	"fmt"
 	"os"
 	"runtime"
+	"strconv"
 	"strings"
 
 	"github.com/tvn9/gopl/url"
 )
+
+const usageText = `
+Usage:
+   hit [options] url
+Options:`
 
 // flags struct holds the flag fields
 type flags struct {
@@ -19,13 +25,45 @@ type flags struct {
 	n, c int
 }
 
+// number is a natrual number.
+type number int
+
+// toNumber is convenience function to convert p to *number.
+func toNumber(p *int) *number {
+	return (*number)(p)
+}
+
+func (n *number) Set(s string) error {
+	v, err := strconv.ParseInt(s, 0, strconv.IntSize)
+	switch {
+	case err != nil:
+		err = errors.New("parse error")
+	case v <= 0:
+		err = errors.New("should be positive")
+	}
+	*n = number(v)
+	return err
+}
+
+func (n *number) String() string {
+	return strconv.Itoa(int(*n))
+}
+
 // Using the flag variables
-func (f *flags) parseFlags() error {
+func (f *flags) parseFlags(s *flag.FlagSet, args []string) error {
+	s.Usage = func() {
+		fmt.Fprintln(s.Output(), usageText[1:])
+		s.PrintDefaults()
+	}
+
 	// You no longer need to declare variables
-	flag.StringVar(&f.url, "url", "", "HTTP server `URL` (required)")
-	flag.IntVar(&f.n, "n", f.n, "Number of requests")
-	flag.IntVar(&f.c, "c", f.c, "Concurrency level")
-	flag.Parse()
+	s.Var(toNumber(&f.n), "n", "Number of requests")
+	s.Var(toNumber(&f.c), "c", "Concurrency level")
+	if err := s.Parse(args); err != nil {
+		return err
+	}
+
+	f.url = flag.Arg(0)
 
 	if err := f.validate(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
@@ -47,7 +85,7 @@ func (f *flags) validate() error {
 	}
 
 	if err := validateURL(f.url); err != nil {
-		return fmt.Errorf("invalid value %q for flag -url: %w", f.url, err)
+		return fmt.Errorf("url: %w", err)
 	}
 	return nil
 }
