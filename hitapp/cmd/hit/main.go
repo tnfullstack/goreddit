@@ -9,7 +9,7 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/tvn9/gopl/hitapp/data"
+	"github.com/tvn9/gopl/hitapp/hit"
 )
 
 const (
@@ -41,20 +41,19 @@ func run(s *flag.FlagSet, args []string, out io.Writer) error {
 	fmt.Fprintln(out, banner())
 	fmt.Fprintf(out, "Making %d requests to %s with a concurrency level %d\n", f.n, f.url, f.c)
 
-	var sum data.Result
-	sum.Merge(&data.Result{
+	var sum hit.Result
+	sum.Merge(&hit.Result{
 		Bytes:    1000,
 		Status:   http.StatusOK,
 		Duration: time.Second,
 	})
-	sum.Merge(&data.Result{
+	sum.Merge(&hit.Result{
 		Bytes:    1000,
 		Status:   http.StatusOK,
 		Duration: 2 * time.Second,
 	})
 	sum.Finalize(2 * time.Second)
 	sum.Fprint(out)
-	fmt.Print(sum)
 
 	return nil
 }

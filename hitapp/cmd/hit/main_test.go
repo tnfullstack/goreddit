@@ -7,6 +7,8 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+
+	_ "github.com/tvn9/gopl/hitapp/hit"
 )
 
 type testEnv struct {
@@ -73,7 +75,7 @@ func TestRun(t *testing.T) {
 				t.Fatal("got nil; want err")
 			}
 			if e.stderr.Len() == 0 {
-				t.Fatal("stderr = 0 bytes; want >0")
+				t.Fatal("stderr = 0 bytes; want > 0")
 			}
 		})
 	}

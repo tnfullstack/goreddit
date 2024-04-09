@@ -1,4 +1,4 @@
-package data
+package hit
 
 import (
 	"fmt"
@@ -27,7 +27,7 @@ func (r *Result) String() string {
 	return s.String()
 }
 
-// Merge
+// Merge this result with another
 func (r *Result) Merge(b *Result) {
 	r.Requests++
 	r.Bytes += b.Bytes
