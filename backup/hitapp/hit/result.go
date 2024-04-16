@@ -32,10 +32,10 @@ func (r *Result) Merge(b *Result) {
 	r.Requests++
 	r.Bytes += b.Bytes
 
-	if r.Fastest == 0 || b.Duration < r.Fastest {
+	if r.Fastest == 0 || r.Fastest > b.Duration {
 		r.Fastest = b.Duration
 	}
-	if b.Duration > r.Slowest {
+	if r.Slowest < b.Duration {
 		r.Slowest = b.Duration
 	}
 
@@ -47,14 +47,14 @@ func (r *Result) Merge(b *Result) {
 	}
 }
 
-// Finalize
+// Finalize the total duration and culculate RPS
 func (r *Result) Finalize(td time.Duration) *Result {
 	r.Duration = td
 	r.RPS = float64(r.Requests) / td.Seconds()
 	return r
 }
 
-// Fprint
+// Fprint the result to an io.Writer
 func (r *Result) Fprint(out io.Writer) {
 	p := func(format string, args ...any) {
 		fmt.Fprintf(out, format, args...)

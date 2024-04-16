@@ -6,7 +6,8 @@ import (
 	"time"
 )
 
-// SendFunc
+// SendFunc is function signature that take an *http.Request and
+// return *Result.
 type SendFunc func(*http.Request) *Result
 
 // Send an HTTP request and return a performance result.
